@@ -45,7 +45,8 @@ class SubLocation(models.Model):
 class Business_Detalies(models.Model):
     name = models.CharField(max_length=255,null=True,blank=True,db_index=True) 
     user= models.ForeignKey(User,related_name='users',on_delete=models.CASCADE)
-    location= models.ForeignKey(Location,related_name='locations',on_delete=models.CASCADE)
+    img=models.FileField(upload_to='category/',db_index=True,null=True,blank=True)
+    location= models.ForeignKey(SubLocation,related_name='locations',on_delete=models.CASCADE)
     category= models.ForeignKey(Category,related_name='category',on_delete=models.CASCADE)
     address=models.TextField(null=True,blank=True)
     pincode=models.IntegerField(default=0)
