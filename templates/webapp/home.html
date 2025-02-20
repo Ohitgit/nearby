@@ -48,11 +48,11 @@
    
 {% for x in category  %}
 
-<a href="{% url 'business_list'% }">
+<a class="cursor-pointer category-link" id="click{{x.id}}" data-category="{{ x.name }}">
     <div class="w-64 rounded overflow-hidden shadow-lg mt-4 px-2">
       <img class="w-full h-40 obje ct-cover" src="{{ x.img.url }}" alt="Image">
       <div class="px-4 py-2">
-        <div class="font-bold text-lg mb-1 text-center">{{x.name}}</div>
+        <div class="font-bold text-lg mb-1 text-center">{{x.name}}  <input type="hidden" value="{{x.name}}" class="categorys"></div>
       </div>
     </div>
   </a>
@@ -61,6 +61,24 @@
   </div>
   <!--- end card-->
 
+  <script>
+    
   
+    $(document).ready(function () {
+    $(".category-link").on("click", function () {
+        var category = $(this).data("category");
+        var city = $(".city").val();  // Make sure you have an input/select with class 'city'
+        var baseURL = window.location.origin;
+
+        if (category && city) {
+            var newURL = baseURL + "/business_list/" + city + "/" + category;
+        } else {
+            var newURL = baseURL + "/page";
+        }
+
+        location.href = newURL;
+    });
+});
+    </script>
 
 {% endblock %}

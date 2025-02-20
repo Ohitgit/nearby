@@ -35,11 +35,25 @@ def signin(request):
     return render(request,'webapp/login.html',{'fm':fm})
 
 
-def business_list(request,city,category):
+def business_list(request,city,categorys):
      print(city,'============')
-     if city and category:
-        business_list1=Business_Detalies.objects.filter(Q(category__name=category) or Q(location__location__city=city) or Q(location__area=city) )
+     category=Category.objects.all()
+     location = Location.objects.values('city')
+     sublocation=SubLocation.objects.values('area')
+     comibned=list(location)+list(sublocation)
+     if city != 'null' and categorys != 'null':
+        business_list1=Business_Detalies.objects.filter(Q(category__name=categorys) or Q(location__location__city=city) or Q(location__area=city) )
         print('business_list',business_list1)
-        return render(request,'webapp/business_list.html',{'business_list1':business_list1})
+        return render(request,'webapp/business_list.html',{'business_list1':business_list1,'category':category,'comibned':comibned})
      else:
-         return render(request,'404.html')
+         return render(request,'webapp/404.html')
+
+
+def business_detalies(request,slug):
+     category=Category.objects.all()
+     
+     location = Location.objects.values('city')
+     sublocation=SubLocation.objects.values('area')
+     comibned=list(location)+list(sublocation)
+     business_slug=Business_Detalies.objects.get(slug=slug)
+     return render(request,'webapp/business_detalies.html',{'category':category,'comibned':comibned})
