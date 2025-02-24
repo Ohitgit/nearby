@@ -53,6 +53,8 @@ class Business_Detalies(models.Model):
     address=models.TextField(null=True,blank=True)
     pincode=models.IntegerField(default=0)
     state = models.CharField(max_length=255,null=True,blank=True,db_index=True)
+    open_time=models.CharField(max_length=255,null=True,blank=True,db_index=True)
+    close_time=models.CharField(max_length=255,null=True,blank=True,db_index=True)
     latitude=models.IntegerField(default=0)
     longtitude=models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)

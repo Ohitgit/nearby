@@ -3,6 +3,7 @@ from .forms import *
 from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
+from django.http import JsonResponse
 # Create your views here.
 
 def home(request):
@@ -56,4 +57,15 @@ def business_detalies(request,slug):
      sublocation=SubLocation.objects.values('area')
      comibned=list(location)+list(sublocation)
      business_slug=Business_Detalies.objects.get(slug=slug)
-     return render(request,'webapp/business_detalies.html',{'category':category,'comibned':comibned})
+     return render(request,'webapp/business_detalies.html',{'category':category,'comibned':comibned,'business_slug':business_slug})
+
+
+def enquiry(request):
+    if request.method == 'POST':
+        name=request.POST.get('name')
+        mobile=request.POST.get('mobile')
+        id=request.POST.get('enquiry_id')
+        EnquiryForm.objects.create(name=name,mobile=mobile,business_id=id)
+        return JsonResponse({'msg':'Enquiry Form Has Been Submited...'})
+def page(reqest):
+    return render(reqest,'webapp/404.html')

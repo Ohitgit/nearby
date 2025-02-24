@@ -36,7 +36,50 @@
         </span>
     </button>
 </div>
-    <!---end carousel slide -->
+<!---end carousel slide -->
 
+
+<!----business_detalies -->
+
+        <div class="flex items-center mt-8">
+            
+            <h1 class="ms-2 text-lg font-bold text-gray-900 dark:text-white ml-10">{{business_slug.name}}</h1>
+            
+        </div>
+
+        <div class="flex items-center ml-10 mt-2">
+            <svg class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+            </svg>
+            <p class="ms-2 text-sm font-bold text-gray-900 dark:text-white">4.95</p>
+            <span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400"></span>
+            <a href="#" class="text-sm font-medium text-gray-900 underline hover:no-underline dark:text-white">73 reviews</a>
+        </div>
+        <div class="flex items-center ml-10 mt-2">
+            <svg class="w-4 h-4 text-red-500 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 0C6.134 0 3 3.134 3 7c0 4.85 5.497 11.634 6.056 12.307a1 1 0 0 0 1.888 0C11.503 18.634 17 11.85 17 7c0-3.866-3.134-7-7-7Zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5Z"/>
+            </svg>
+            
+            <p class="ms-2 text-sm font-bold text-gray-900 dark:text-white">{{business_slug.address}}</p>
+            <span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400"></span>
+            <a href="#" class="text-sm font-medium text-gray-900 underline hover:no-underline dark:text-white">Open {{business_slug.open_time}}   To  {{business_slug.close_time}}</a>
+        </div>
+
+        <div class="flex items-center ml-10 mt-2">
+           
+            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Show Numbers</button>
+            
+         
+            <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                Send Enquiry
+              </button>
+        </div>
+     
+    </div>
+
+
+
+
+<!---- end business_detailes -->
 
 {% endblock %}
