@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="updateForm" enctype="multipart/form-data">
+  <input type="text" name="name" placeholder="Enter Name" />
+
+  <input type="email" name="email" placeholder="Enter email" />
+  <input type="file" name="image" />
+  <button type="submit">Update</button>
+</form>
+
+</body>
+
+<script>
+
+  
+document.getElementById('updateForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const form = document.getElementById('updateForm');
+  const formData = new FormData(form);
+  const path = window.location.pathname;  
+  const segments = path.split('/');      
+  const id = segments[2];                
+       
+  fetch(`http://127.0.0.1:8000/api/profile/${id}`, {
+    method: 'PUT',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    alert('sucesss')
+    console.log('Updated:', data);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+});
+</script>
+</html>
+
+
+
+

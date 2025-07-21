@@ -43,7 +43,7 @@ def business_list(request,city,categorys):
      sublocation=SubLocation.objects.values('area')
      comibned=list(location)+list(sublocation)
      if city != 'null' and categorys != 'null':
-        business_list1=Business_Detalies.objects.filter(Q(category__name=categorys) or Q(location__location__city=city) or Q(location__area=city) )
+        business_list1=Business_Detalies.objects.filter(Q(city__city=city) | Q(location__area__iexact=city),category__name=categorys)
         print('business_list',business_list1)
         return render(request,'webapp/business_list.html',{'business_list1':business_list1,'category':category,'comibned':comibned})
      else:
@@ -67,5 +67,5 @@ def enquiry(request):
         id=request.POST.get('enquiry_id')
         EnquiryForm.objects.create(name=name,mobile=mobile,business_id=id)
         return JsonResponse({'msg':'Enquiry Form Has Been Submited...'})
-def page(reqest):
-    return render(reqest,'webapp/404.html')
+def page(reqest,id):
+    return render(reqest,'webapp/imageupload.html')

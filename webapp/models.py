@@ -49,6 +49,7 @@ class Business_Detalies(models.Model):
     user= models.ForeignKey(User,related_name='users',on_delete=models.CASCADE)
     img=models.FileField(upload_to='category/',db_index=True,null=True,blank=True)
     location= models.ForeignKey(SubLocation,related_name='locations',on_delete=models.CASCADE)
+    city= models.ForeignKey(Location,related_name='citys',on_delete=models.CASCADE,null=True,blank=True)
     category= models.ForeignKey(Category,related_name='category',on_delete=models.CASCADE)
     address=models.TextField(null=True,blank=True)
     pincode=models.IntegerField(default=0)
