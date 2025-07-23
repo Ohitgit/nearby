@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+import math
 # Create your models here.
 class Profile(models.Model):
       user=models.OneToOneField(User,related_name='user_name',on_delete=models.CASCADE)
@@ -56,12 +59,15 @@ class Business_Detalies(models.Model):
     state = models.CharField(max_length=255,null=True,blank=True,db_index=True)
     open_time=models.CharField(max_length=255,null=True,blank=True,db_index=True)
     close_time=models.CharField(max_length=255,null=True,blank=True,db_index=True)
-    latitude=models.IntegerField(default=0)
-    longtitude=models.IntegerField(default=0)
+    latitude=models.FloatField(default=0)
+    longtitude=models.FloatField(default=0)
+    distance=models.FloatField(default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return self.name
+    
 
 def save(self, *args, **kwargs):
         if not self.slug:
@@ -72,6 +78,32 @@ def save(self, *args, **kwargs):
                 self.slug = f"{base_slug}-{counter}"
                 counter += 1
         super().save(*args, **kwargs)
+
+def calculate_distance(lat1, lon1, lat2, lon2):
+    # Haversine formula
+    R = 6371  # Earth radius in kilometers
+    phi1 = math.radians(lat1)
+    phi2 = math.radians(lat2)
+    delta_phi = math.radians(lat2 - lat1)
+    delta_lambda = math.radians(lon2 - lon1)
+
+    a = math.sin(delta_phi / 2) ** 2 + \
+        math.cos(phi1) * math.cos(phi2) * math.sin(delta_lambda / 2) ** 2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+
+    return R * c  # Distance in kilometers
+
+@receiver(post_save, sender=Business_Detalies)
+def update_distance(sender, instance, **kwargs):
+    reference_lat = 22.7196
+    reference_lon = 75.8577
+
+    distance = calculate_distance(reference_lat, reference_lon, instance.latitude, instance.longtitude)
+
+    # Only update if value changed
+    if instance.distance != distance:
+        instance.distance = distance
+        instance.save(update_fields=['distance'])
 class EnquiryForm(models.Model):
       name=models.CharField(max_length=200,null=True,blank=True,db_index=True)
       mobile=models.IntegerField(default=0)
